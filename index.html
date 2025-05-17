@@ -1,9 +1,194 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>GitHub Pages Test</title>
-  </head>
-  <body>
-    <h1 style="color:green;">It works!</h1>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brighter Tomorrow - Charity for Indian School</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .sidebar {
+            width: 250px;
+            overflow: hidden;
+            transition: width 0.3s, opacity 0.3s;
+        }
+        .sidebar.closed {
+            width: 0;
+            opacity: 0;
+        }
+        .sidebar ul {
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        .sidebar.closed ul {
+            opacity: 0;
+        }
+        .logo {
+            border-radius: 50%;
+        }
+        .loading-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1c1c1e;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+        .hidden {
+            display: none;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img class="logo" src="your-logo.png" alt="Logo" />
+            <h1 data-translate-key="welcome-title">Welcome to Brighter Tomorrow</h1>
+        </div>
+    </header>
+
+    <!-- Language Selector -->
+    <div style="text-align:center; margin: 2em 0;">
+        <label for="language-selector" style="font-weight:bold;">Select Language: </label>
+        <select id="language-selector">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="zh">中文</option>
+            <option value="ru">Русский</option>
+            <option value="ar">العربية</option>
+        </select>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#" class="tablinks active" onclick="openTab(event, 'About')">About</a></li>
+            <li><a href="#" class="tablinks" onclick="openTab(event, 'Programs')">Programs</a></li>
+            <li><a href="#" class="tablinks" onclick="openTab(event, 'Donate')">Donate</a></li>
+            <li><a href="#" class="tablinks" onclick="openTab(event, 'Gallery')">Gallery</a></li>
+            <li><a href="#" class="tablinks" onclick="openTab(event, 'Testimonials')">Testimonials</a></li>
+        </ul>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main>
+        <section id="About" class="tabcontent" style="display:block;">
+            <h2 data-translate-key="about-title">About Us</h2>
+            <p data-translate-key="about-content">Brighter Tomorrow is a non-profit organization dedicated to improving the lives of children through education...</p>
+        </section>
+        <section id="Programs" class="tabcontent">
+            <h2 data-translate-key="programs-title">Our Programs</h2>
+            <p data-translate-key="programs-content">Every year, we make a heartfelt journey to visit a group of incredible children in India...</p>
+            <h3 data-translate-key="programs-dates-title">Dates We Visited:</h3>
+            <p data-translate-key="programs-dates">December 26th, 2025</p>
+        </section>
+        <section id="Donate" class="tabcontent">
+            <h2 data-translate-key="donate-title">Donate to Brighter Tomorrow</h2>
+            <p data-translate-key="donate-content">Your generous contributions enable us to provide...</p>
+            <h3 data-translate-key="donate-monetary-title">Monetary Donations</h3>
+            <button class="paypal-button">Donate with PayPal</button>
+            <h3 data-translate-key="donate-supplies-title">Donate Supplies and Resources</h3>
+            <p data-translate-key="donate-supplies-content">If you would like to donate school supplies, educational materials, or other resources, please contact us.</p>
+        </section>
+        <section id="Gallery" class="tabcontent">
+            <h2 data-translate-key="gallery-title">Gallery</h2>
+            <p data-translate-key="gallery-content">Photos and videos of our activities and events...</p>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="gallery1.jpg" alt="Gallery image 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="gallery2.jpg" alt="Gallery image 2">
+                </div>
+                <!-- Add more items as needed -->
+            </div>
+        </section>
+        <section id="Testimonials" class="tabcontent">
+            <h2 data-translate-key="testimonials-title">Testimonials</h2>
+            <p data-translate-key="testimonials-content">Stories and testimonials from our students, parents, and donors...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Brighter Tomorrow</p>
+    </footer>
+
+    <script>
+        // Tab switching
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Language translation functionality
+        document.addEventListener("DOMContentLoaded", function() {
+            const translations = {
+                en: {
+                    "welcome-title": "Welcome to Brighter Tomorrow",
+                    "about-title": "About Us",
+                    "about-content": "Brighter Tomorrow is a non-profit organization dedicated to improving the lives of children through education. Founded by a group of passionate individuals, our organization aims to provide the necessary resources and support to underprivileged children in India.",
+                    "programs-title": "Our Programs",
+                    "programs-content": "Every year, we make a heartfelt journey to visit a group of incredible children in India. These young individuals embody kindness, perseverance, and an unbreakable spirit despite the challenges they face. Our programs are designed to provide them with the education and resources they need to succeed.",
+                    "programs-dates-title": "Dates We Visited:",
+                    "programs-dates": "December 26th, 2025",
+                    "donate-title": "Donate to Brighter Tomorrow",
+                    "donate-content": "Your generous contributions enable us to provide the necessary resources and support to underprivileged children in India. Every donation, no matter the size, makes a significant impact on their lives.",
+                    "donate-monetary-title": "Monetary Donations",
+                    "donate-supplies-title": "Donate Supplies and Resources",
+                    "donate-supplies-content": "If you would like to donate school supplies, educational materials, or other resources, please contact us.",
+                    "gallery-title": "Gallery",
+                    "gallery-content": "Photos and videos of our activities and events. Our gallery showcases the smiles, achievements, and transformative moments of the children we support. Browse through our collection to see the impact of your contributions.",
+                    "testimonials-title": "Testimonials",
+                    "testimonials-content": "Stories and testimonials from our students, parents, and donors. Hear directly from those whose lives have been touched by Brighter Tomorrow. Our testimonials reflect the gratitude and positive impact of our work."
+                }
+                // Add other language objects here as needed
+            };
+
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.addEventListener('change', function() {
+                    const selectedLanguage = languageSelector.value;
+                    loadTranslations(selectedLanguage);
+                });
+            }
+
+            function loadTranslations(language) {
+                const translation = translations[language] || translations['en'];
+                document.querySelectorAll('[data-translate-key]').forEach(element => {
+                    const key = element.getAttribute('data-translate-key');
+                    if (translation[key]) {
+                        element.textContent = translation[key];
+                    }
+                });
+            }
+
+            // Load default language (English)
+            loadTranslations('en');
+        });
+    </script>
+</body>
 </html>
