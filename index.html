@@ -24,9 +24,45 @@
         .logo {
             border-radius: 50%;
         }
+        /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: #1c1c1e;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: inherit;
+            font-size: 1.3em;
+            transition: opacity 0.7s;
+        }
+        #loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #loading-quote {
+            max-width: 90vw;
+            text-align: center;
+            margin: 0 2vw;
+        }
+        #loading-attribution {
+            margin-top: 0.5em;
+            font-size: 0.9em;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div id="loading-quote"></div>
+        <div id="loading-attribution"></div>
+    </div>
+
     <header>
         <div class="logo-container">
             <img class="logo" src="favicon.ico" alt="Logo" />
@@ -89,7 +125,6 @@
                 <div class="gallery-item">
                     <img src="gallery2.JPG" alt="Gallery image 2">
                 </div>
-                <!-- Add more items as needed -->
             </div>
         </section>
         <section id="Testimonials" class="tabcontent">
@@ -103,12 +138,74 @@
     </footer>
 
     <script>
+        // Loading screen with rotating quotes
+        (function() {
+            const quotes = [
+                {
+                    quote: "No one has ever become poor by giving.",
+                    author: "Anne Frank"
+                },
+                {
+                    quote: "Charity begins at home, but should not end there.",
+                    author: "Thomas Fuller"
+                },
+                {
+                    quote: "The best way to find yourself is to lose yourself in the service of others.",
+                    author: "Mahatma Gandhi"
+                },
+                {
+                    quote: "It's not how much we give but how much love we put into giving.",
+                    author: "Mother Teresa"
+                },
+                {
+                    quote: "We make a living by what we get, but we make a life by what we give.",
+                    author: "Winston Churchill"
+                }
+            ];
+
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingQuote = document.getElementById('loading-quote');
+            const loadingAttribution = document.getElementById('loading-attribution');
+
+            // Pick a random starting index
+            const startIndex = Math.floor(Math.random() * quotes.length);
+            let current = startIndex;
+            let quoteTimer = null;
+            let elapsed = 0;
+
+            function showQuote(idx) {
+                loadingQuote.textContent = `"${quotes[idx].quote}"`;
+                loadingAttribution.textContent = `– ${quotes[idx].author}`;
+            }
+
+            // Show the initial quote
+            showQuote(current);
+
+            function nextQuote() {
+                // Move to the next quote (cycle)
+                current = (current + 1) % quotes.length;
+                showQuote(current);
+            }
+
+            // Start cycling quotes every 2 seconds, for a total of 5 seconds
+            quoteTimer = setInterval(() => {
+                elapsed += 2;
+                nextQuote();
+                if (elapsed >= 4) { // After two cycles (0s, 2s, 4s), fade out at 5s
+                    clearInterval(quoteTimer);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('fade-out');
+                        setTimeout(() => loadingScreen.style.display = 'none', 700);
+                    }, 2000); // Wait 2s after last quote to fade out
+                }
+            }, 2000);
+        })();
+
         // Sidebar show/hide logic
         const sidebar = document.getElementById('sidebar');
         let sidebarTimeout = null;
 
         document.addEventListener('mousemove', function(e) {
-            // Show sidebar if mouse is near the left edge (within 40px)
             if (e.clientX < 40) {
                 sidebar.classList.add('visible');
                 if (sidebarTimeout) {
@@ -116,7 +213,6 @@
                     sidebarTimeout = null;
                 }
             } else {
-                // Hide sidebar 400ms after mouse leaves proximity
                 if (sidebar.classList.contains('visible') && !sidebarTimeout) {
                     sidebarTimeout = setTimeout(() => {
                         sidebar.classList.remove('visible');
