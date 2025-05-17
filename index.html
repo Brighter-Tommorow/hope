@@ -4,48 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brighter Tomorrow - Charity for Indian School</title>
-    <style>
-        html, body { background: #1c1c1e !important; }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: #1c1c1e;
-            z-index: 10;
-            padding-top: 3.75em;
-            transition: left 0.3s cubic-bezier(.4,0,.2,1);
-        }
-        .sidebar.visible { left: 0; }
-        .logo { border-radius: 50%; }
-        #loading-screen {
-            position: fixed;
-            z-index: 9999;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh;
-            background: #1c1c1e;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: inherit;
-            font-size: 1.3em;
-            transition: opacity 0.7s;
-        }
-        #loading-screen.fade-out { opacity: 0; pointer-events: none; }
-        #loading-quote {
-            max-width: 90vw;
-            text-align: center;
-            margin: 0 2vw;
-        }
-        #loading-attribution {
-            margin-top: 0.5em;
-            font-size: 0.9em;
-            color: #aaa;
-        }
-    </style>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -64,8 +22,8 @@
     </header>
 
     <!-- Language Selector -->
-    <div style="text-align:center; margin: 2em 0;">
-        <label for="language-selector" style="font-weight:bold;">Select Language: </label>
+    <div class="language-selector-container" style="text-align:center; margin: 2em 0;">
+        <label for="language-selector">Select Language: </label>
         <select id="language-selector">
             <option value="en">English</option>
             <option value="es">Español</option>
