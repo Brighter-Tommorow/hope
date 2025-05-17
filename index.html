@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brighter Tomorrow - Charity for Indian School</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        html, body { background: #1c1c1e !important; }
         .sidebar {
             position: fixed;
             top: 0;
@@ -18,13 +17,8 @@
             padding-top: 3.75em;
             transition: left 0.3s cubic-bezier(.4,0,.2,1);
         }
-        .sidebar.visible {
-            left: 0;
-        }
-        .logo {
-            border-radius: 50%;
-        }
-        /* Loading Screen Styles */
+        .sidebar.visible { left: 0; }
+        .logo { border-radius: 50%; }
         #loading-screen {
             position: fixed;
             z-index: 9999;
@@ -40,10 +34,7 @@
             font-size: 1.3em;
             transition: opacity 0.7s;
         }
-        #loading-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
+        #loading-screen.fade-out { opacity: 0; pointer-events: none; }
         #loading-quote {
             max-width: 90vw;
             text-align: center;
@@ -55,6 +46,8 @@
             color: #aaa;
         }
     </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -163,6 +156,9 @@
                 }
             ];
 
+            const quoteDuration = 3500; // 3.5s per quote
+            const loadingDuration = 7000; // 7s total
+
             const loadingScreen = document.getElementById('loading-screen');
             const loadingQuote = document.getElementById('loading-quote');
             const loadingAttribution = document.getElementById('loading-attribution');
@@ -170,8 +166,8 @@
             // Pick a random starting index
             const startIndex = Math.floor(Math.random() * quotes.length);
             let current = startIndex;
-            let quoteTimer = null;
             let elapsed = 0;
+            let quoteTimer = null;
 
             function showQuote(idx) {
                 loadingQuote.textContent = `"${quotes[idx].quote}"`;
@@ -182,23 +178,22 @@
             showQuote(current);
 
             function nextQuote() {
-                // Move to the next quote (cycle)
                 current = (current + 1) % quotes.length;
                 showQuote(current);
             }
 
-            // Start cycling quotes every 2 seconds, for a total of 5 seconds
+            // Start cycling quotes every 3.5 seconds, for a total of 7 seconds
             quoteTimer = setInterval(() => {
-                elapsed += 2;
+                elapsed += quoteDuration;
                 nextQuote();
-                if (elapsed >= 4) { // After two cycles (0s, 2s, 4s), fade out at 5s
+                if (elapsed >= loadingDuration - quoteDuration) {
                     clearInterval(quoteTimer);
                     setTimeout(() => {
                         loadingScreen.classList.add('fade-out');
                         setTimeout(() => loadingScreen.style.display = 'none', 700);
-                    }, 2000); // Wait 2s after last quote to fade out
+                    }, quoteDuration);
                 }
-            }, 2000);
+            }, quoteDuration);
         })();
 
         // Sidebar show/hide logic
